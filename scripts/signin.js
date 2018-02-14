@@ -16,7 +16,7 @@ function login(){
 			console.log("Status: " + status);
 
 
-			if(status === "Student") {
+			if(status === "Student" || status === "Teacher") {
 				//this person is not a librarian and thus should not be logged in
 				alert("You are not a librarian and should not be logged in");
     			//sign out the user once they press the logout button.
