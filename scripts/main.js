@@ -47,7 +47,15 @@ document.getElementById("myBtn").addEventListener("click", function() {
             if (rating === undefined) {
               rating = 0;
             }
-            
+            if (description === undefined) {
+              description = "NA";
+            }
+            if (author === undefined) {
+              author = "NA";
+            }
+            if (url === undefined) {
+              url = "https://images-na.ssl-images-amazon.com/images/I/3151L%2BxIwtL._SY445_.jpg";
+            }
             console.log("Book: " + title + " " + author + " " + url + " " + rating);
 
             var BLOCK_SAFE_DATA = splitted[j].split(",");
