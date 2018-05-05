@@ -1,5 +1,37 @@
+//make sure that someone can't just search the portal/home.html and bypass the Login
+console.log("Start");
+$(window).on('load', function () {
+    var u = firebase.auth().currentUser;
+    console.log("-");
+    console.log(u);
+    console.log("-");
+
+    if(u) {
+      //ok
+      var database = firebase.database();
+      var uid = u.uid;
+      var teacherText = $("#teacherName");
+      var topRight = $("#topRightName");
+
+      var teacherName = "Librarian";
+
+      //get teacher name
+      var librarianNameRef = firebase.database().ref('Users/' + uid + '/Name');
+        librarianNameRef.on('value', function(snapshot) {
+          teacherText.text(snapshot.val());
+          topRight.text(snapshot.val())
+      });
+    } else {
+      //INTRUDER
+      window.location.href = "index.html"
+    }
+});
+console.log("Done");
+
+
+
 /*
-This script reads the file from a certain file path 
+This script reads the file from a certain file path
 returns the contents of the file as a string.
 */
 document.getElementById("myBtn").addEventListener("click", function() {
@@ -35,7 +67,7 @@ document.getElementById("myBtn").addEventListener("click", function() {
 		database.ref('Barcodes/' + BARCODE).set({
 		    ISBN: ISBN_VAL
 		  });
-        //use JQuery to access the google books API and figure out what the book, title, author, description, url, and rating. 
+        //use JQuery to access the google books API and figure out what the book, title, author, description, url, and rating.
         $.get("https://www.googleapis.com/books/v1/volumes?q=isbn:" + ISBN_VAL, function(response) {
             var book = response.items[0];
             var title = book.volumeInfo.title;
@@ -43,7 +75,7 @@ document.getElementById("myBtn").addEventListener("click", function() {
             var description = book.volumeInfo.description;
             var url = book.volumeInfo.imageLinks.smallThumbnail;
             var rating = book.volumeInfo.averageRating;
-            
+
             if (rating === undefined) {
               rating = 0;
             }
@@ -64,7 +96,7 @@ document.getElementById("myBtn").addEventListener("click", function() {
 
             console.log("Block safe ISBN: " + BLOCK_SAFE_ISBN);
 
-            //add the information to the firebase database under the Books child. 
+            //add the information to the firebase database under the Books child.
             database.ref('Books/' + BLOCK_SAFE_ISBN).set({
                 Author: author,
                 Description: description,
@@ -73,11 +105,11 @@ document.getElementById("myBtn").addEventListener("click", function() {
                 URL: url
             });
         });
-        
-        
+
+
 	}
 
-    //Set the total number of books under the statistics child. 
+    //Set the total number of books under the statistics child.
     firebase.database().ref('Statistics/TotalBooksInLibrary').once('value').then(function(snapshot) {
         var currentNumberOfBooks = snapshot.val()
         //the number of books is the length of the splitted array (num of rows).
@@ -85,7 +117,7 @@ document.getElementById("myBtn").addEventListener("click", function() {
     });
 
 
-   //alert the user that all of the books were added. 
+   //alert the user that all of the books were added.
 	 alert("Added all books to firebase. You're all set up! :)")
 
 
@@ -113,14 +145,14 @@ document.getElementById("myBtn2").addEventListener("click", function() {
   // Get a reference to the database service
   var database = firebase.database();
 
-  //iterate over all of the lines in the csv file. 
-  
-  //note j must be declared as LET because we need to preserve the value of j when we go into the js closure. 
+  //iterate over all of the lines in the csv file.
+
+  //note j must be declared as LET because we need to preserve the value of j when we go into the js closure.
   for (let j = 0; j < splitted.length; j++) {
 
-    //get an array of values representing the row. 
+    //get an array of values representing the row.
     let data = splitted[j].split(",");
-    //email is indexed at the 0th element. 
+    //email is indexed at the 0th element.
     let EMAIL = data[0];
     //password is 1st index of array
     let PASSWORD = data[1];
@@ -130,13 +162,13 @@ document.getElementById("myBtn2").addEventListener("click", function() {
     let STATUS = data[3];
 
     console.log("Email: " + EMAIL + " PASSWORD: " + PASSWORD + " NAME: " + NAME + " STATUS: " + STATUS);
-      
-      //create firebase user with given credentials. 
+
+      //create firebase user with given credentials.
       firebase.auth().createUserWithEmailAndPassword(EMAIL, PASSWORD)
       .then(function(user){
         console.log('uid',user.uid)
 
-        //block safe data is data which is preserved inside of the closure we are in. 
+        //block safe data is data which is preserved inside of the closure we are in.
         var BLOCK_SAFE_DATA = splitted[j].split(",");
         var BLOCK_SAFE_NAME = BLOCK_SAFE_DATA[2];
         var BLOCK_SAFE_STATUS = BLOCK_SAFE_DATA[3];
@@ -147,7 +179,7 @@ document.getElementById("myBtn2").addEventListener("click", function() {
         firebase.database().ref("Users/" + user.uid).set({
           Name: NAME,
           Status: STATUS
-        }); 
+        });
         //Here if you want you can sign in the user
       }).catch(function(error) {
           //Handle error
@@ -158,14 +190,14 @@ document.getElementById("myBtn2").addEventListener("click", function() {
   }
 
 
-  
+
 
   alert("Created all users. You're all set up! :)")
 
 
   });
 
-    //call the reader callback to tell it to begin parsing the .csv file. 
+    //call the reader callback to tell it to begin parsing the .csv file.
     reader.readAsText(document.getElementById('file2').files[0]);
 
 });
@@ -177,4 +209,27 @@ function logout(){
   window.location.href = "index.html"
 }
 
+$('#fileInput').on('click touchstart' , function(){
+    $(this).val('');
+});
 
+
+//Trigger now when you have selected any file
+$("#fileInput").change(function(e) {
+  var filePath = $("#fileInput")[0].files[0].name;
+  $("#file").text(filePath);
+  $("#file").css("font-style", "italic");
+});
+
+
+$('#fileInput2').on('click touchstart' , function(){
+    $(this).val('');
+});
+
+
+//Trigger now when you have selected any file
+$("#fileInput2").change(function(e) {
+  var filePath = $("#fileInput2")[0].files[0].name;
+  $("#file2").text(filePath);
+  $("#file2").css("font-style", "italic");
+});

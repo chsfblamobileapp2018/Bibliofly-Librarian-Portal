@@ -1,106 +1,147 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Librarian Setup</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <link rel="stylesheet"
-          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+<head>
+  <title>Librarian Setup</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="node_modules/material-components-web/dist/material-components-web.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta http-equiv="Cache-control" content="no-cache">
 </head>
+
 <body>
 
-<!--
-#col 1 is barcode
-#col 2 is ISBN
- -->
 
-<!-- 	<div class="row">
-	    <div id="icon">
-			<img src="res/icon.jpg" alt="Application Logo">
-	    </div>
-	    <div class="col-md-6">
-	        <h1>Bibliofly - Library Database Quick Setup Portal</h1>
-	    </div>
-	</div> -->
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <img style='float:left;' src="res/icon.jpg"/>
-            <h1>Bibliofly - Library Database Quick Setup Portal</h1>
+
+  <header class="mdc-top-app-bar">
+    <div class="mdc-top-app-bar__row">
+      <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+        <a href="#" class="material-icons mdc-top-app-bar__navigation-icon" id="logout" onclick="logout();"><i class="material-icons">arrow_back</i></a>
+        <span class="mdc-top-app-bar__title">Librarian Access Portal - Bibliofly</span>
+      </section>
+    </div>
+  </header>
+
+  <div class="container">
+
+
+    <div class="top">
+      <div class="row">
+
+        <div class="col-md-8">
+          <div class="jumbotron" style="background:transparent !important">
+            <h1 id="jumboh1">Hello, <span id="teacherName">Librarian</span>!</h1>
+          </div>
+
         </div>
+
+
+
+
+        <div class="col-md-4">
+
+        <div class="row">
+          <div class="col-xs-9">
+            <div>
+              <h3 id="topRightName">Librarian</h3>
+              <h3>Cupertino High School</h3>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <img style="width: 96px;" src="res/topRightLogo.png">
+          </div>
+        </div>
+
+
+        </div>
+
+      </div>
     </div>
 
 
-    <h2>How to use automatic book entry system</h2>
-
-    <ul>
-        <li>Obtain a .csv file with Barcodes(in column 1) and ISBN numbers (in column 2)</li>
-        <li>Click the button which says "Choose File" and add the .csv</li>
-        <li>Finally click "Add Books" which parses the csv and uploads the books to your personal
-            library database.
-        </li>
-	    <li><b>Whenever you add a csv of books, make sure you aren't re-adding books! This will rewrite all holds/checkouts of that book, and cause issues!</b>
-        </li>
-    </ul>
-
-    <h2>How to use automatic account creation system</h2>
-
-    <ul>
-        <li>Obtain a .csv file of emails (in column 1), passwords (in column 2), names (in column
-            3), and finally status (either "Student" or "Teacher" account) in column 4.
-        </li>
-        <li>Click the button which says "Choose File" and add the .csv</li>
-        <li>Finally click "Create Accounts" which parses the .csv, creates a new account, and adds
-            the new users credentials to the Online Authentication Database.
-        </li>
-    </ul>
 
 
-    <!-- <input type="file" id="files" name="files[]" multiple />
-    <output id="list"></output> -->
 
+    <div class="row">
+      <div class="col-md-6">
+        <div class="mdc-card">
 
-    <pre id="file"></pre>
+          <div class="leftAligned">
+            <h1>Adding Books</h1>
+            <ol>
+              <li>Obtain a CSV file wiht Barcodes in column 1 and ISBN number in column 2.</li>
+              <li>Click "Choose File" and select the CSV file.</li>
+              <li>Click "Add Books" to automatically add the books into the database.</li>
+            </ol>
 
-    <div class="wrapper">
-        <input id="fileInput" type="file">
-        <button id="myBtn">Add Books</button>
+            <div class="buttonBlock">
+              <button class="mdc-button" onclick="$('#fileInput').click();">Choose File</button>
+              <button class="mdc-button" id="myBtn">Add Books</button>
+              <input id="fileInput" type="file" style="visibility:hidden">
+              <p id="file"><i>Filename will appear here</i></p>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+      <div class="col-md-6">
+        <div class="mdc-card">
+          <div class="leftAligned">
+            <h1>Adding Users</h1>
+            <ol>
+              <li>Obtain a CSV file with emails in column 1, passwords in column 2, names in colum 3, and status ("Student or "Teacher") in column 4</li>
+              <li>Click "Choose file" and select the CSV file.</li>
+              <li>Click "Add users" to add the users into the firebase.</li>
+            </ol>
+
+            <div class="buttonBlock">
+              <button class="mdc-button" onclick="$('#fileInput2').click();">Chooose File</button>
+              <button class="mdc-button" id="myBtn2">Add Users</button>
+              <input id="fileInput2" type="file" style="visibility:hidden">
+              <p id="file2"><i>Filename will appear here</i></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
     </div>
 
-    <pre id="file"></pre>
+  </div>
 
-    <div class="wrapper">
-        <input type="file" name="file2" id="file2">
-        <button id="myBtn2">Create Accounts</button>
-    </div>
+  <!--firebase initialization code-->
+  <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase-database.js"></script>
 
-    <pre id="file2"></pre>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyB-xwSaONfr9ki5SluR6N4_h_eo0qM12i8",
+      authDomain: "mobileappdevelopment-17-18.firebaseapp.com",
+      databaseURL: "https://mobileappdevelopment-17-18.firebaseio.com",
+      projectId: "mobileappdevelopment-17-18",
+      storageBucket: "mobileappdevelopment-17-18.appspot.com",
+      messagingSenderId: "543620889214"
+    };
+    firebase.initializeApp(config);
+  </script>
 
-    <button style="width:100px;height:50px;" id="logout" onclick="logout();">Logout</button>
+  <script src="scripts/main.js"></script>
+  <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
+  <script src="node_modules/material-components-web/dist/material-components-web.js"></script>
+  <script>
+    mdc.autoInit()
+  </script>
 
-
-    <!--firebase initialization code-->
-    <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.8.2/firebase-database.js"></script>
-    <script>
-	  // Initialize Firebase
-	  var config = {
-	    apiKey: "AIzaSyB-xwSaONfr9ki5SluR6N4_h_eo0qM12i8",
-	    authDomain: "mobileappdevelopment-17-18.firebaseapp.com",
-	    databaseURL: "https://mobileappdevelopment-17-18.firebaseio.com",
-	    projectId: "mobileappdevelopment-17-18",
-	    storageBucket: "mobileappdevelopment-17-18.appspot.com",
-	    messagingSenderId: "543620889214"
-	  };
-	  firebase.initializeApp(config);
-
-    </script>
-    <script src="scripts/main.js"></script>
-</div>
+  </div>
 </body>
 
 
 </html>
-
