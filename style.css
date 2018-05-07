@@ -34,6 +34,16 @@ h3 {
 	width: 100%;
 }
 
+#topRightName {
+	margin-top: 15px;
+	margin-bottom: 0px;
+}
+
+#schoolName {
+	margin-top: 10px;
+	margin-bottom: 0px;
+}
+
 body {
 	font-family: 'Roboto', sans-serif;
 	color: gray;
@@ -62,4 +72,9 @@ body {
 }
 .top {
 	margin-top: 70px;
+}
+
+.mdc-button {
+	color: rgb(49, 63, 161) !important;
+	font-size: 12px !important;
 }
