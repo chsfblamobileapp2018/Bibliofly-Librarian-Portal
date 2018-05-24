@@ -1,32 +1,32 @@
 //make sure that someone can't just search the portal/home.html and bypass the Login
-console.log("Start");
-$(window).on('load', function () {
-    var u = firebase.auth().currentUser;
-    console.log("-");
-    console.log(u);
-    console.log("-");
+// console.log("Start");
+// $(window).on('load', function () {
+//     var u = firebase.auth().currentUser;
+//     console.log("-");
+//     console.log(u);
+//     console.log("-");
 
-    if(u) {
-      //ok
-      var database = firebase.database();
-      var uid = u.uid;
-      var teacherText = $("#teacherName");
-      var topRight = $("#topRightName");
+//     if(u) {
+//       //ok
+//       var database = firebase.database();
+//       var uid = u.uid;
+//       var teacherText = $("#teacherName");
+//       var topRight = $("#topRightName");
 
-      var teacherName = "Librarian";
+//       var teacherName = "Librarian";
 
-      //get teacher name
-      var librarianNameRef = firebase.database().ref('Users/' + uid + '/Name');
-        librarianNameRef.on('value', function(snapshot) {
-          teacherText.text(snapshot.val());
-          topRight.text(snapshot.val())
-      });
-    } else {
-      //INTRUDER
-      window.location.href = "index.html"
-    }
-});
-console.log("Done");
+//       //get teacher name
+//       var librarianNameRef = firebase.database().ref('Users/' + uid + '/Name');
+//         librarianNameRef.on('value', function(snapshot) {
+//           teacherText.text(snapshot.val());
+//           topRight.text(snapshot.val())
+//       });
+//     } else {
+//       //INTRUDER
+//       window.location.href = "index.html"
+//     }
+// });
+// console.log("Done");
 
 
 
