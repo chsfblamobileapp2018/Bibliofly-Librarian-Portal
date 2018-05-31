@@ -50,7 +50,7 @@ document.getElementById("myBtn").addEventListener("click", function() {
 	var database = firebase.database();
 
 	// Loop through all lines in the csv.
-	for (let j = 0; j < splitted.length; j++) {
+	for (let j = 0; j < splitted.length; j += 2) {
 		//parse the line.
 
     //split each line by , to get the individual values per row.
